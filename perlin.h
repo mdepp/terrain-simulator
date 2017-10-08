@@ -16,7 +16,7 @@
 
 #include <algorithm>
 #include <assert.h>
-#include <cmath>
+#include <random>
 #include <cstdlib>
 #include <vector>
 #include <glm/glm.hpp>
@@ -26,7 +26,8 @@ class PerlinNoise
 public:
     PerlinNoise(int width, int height)
         : m_width(width), m_height(height),
-		m_gradientChoices({ glm::vec2(1, 1), glm::vec2(1, -1), glm::vec2(-1, 1), glm::vec2(-1, -1) })
+		  m_gradientChoices({ glm::vec2(1, 1), glm::vec2(1, -1), glm::vec2(-1, 1), glm::vec2(-1, -1) }),
+		  m_rnd(m_rdev()), m_dist(0, m_gradientChoices.size()-1)
     {
         m_gradients.resize(width);
         for(auto& rows : m_gradients)
@@ -34,7 +35,7 @@ public:
             rows.resize(height);
             for (auto&  corner : rows)
             {
-                corner = std::rand() % m_gradientChoices.size(); // TODO: Use better random generator
+				corner = m_dist(m_rnd);
             }
         }
     }
@@ -90,4 +91,7 @@ private:
     std::vector<glm::vec2> m_gradientChoices;
     std::vector<std::vector<int>> m_gradients; // Stores an index into gradient choices
 
+	std::random_device m_rdev;
+	std::mt19937 m_rnd;
+	std::uniform_int_distribution<int> m_dist;
 };
