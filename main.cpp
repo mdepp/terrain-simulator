@@ -14,10 +14,10 @@ int main(int argc, char* argv[])
 
     const int imageSize = 800;
     const int nCells = 10;
-    PerlinNoise pn(nCells, nCells);
+	PerlinNoise pn({ nCells, nCells });
 
     // A quick hack to get noise displaying
-	auto pixels = pn.generateNoise({ 0, 0 }, {nCells, nCells }, { imageSize, imageSize });
+	auto pixels = pn.getNoiseMap({ 0, 0 }, {nCells, nCells }, { imageSize, imageSize });
 	auto noise_surface = createSurfaceFromHeightmap(pixels);
 
     auto window = SDL_CreateWindow("Perlin noise",
