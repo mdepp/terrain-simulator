@@ -39,6 +39,21 @@ double PerlinNoise::getPointValue(glm::vec2 pos)
     return (1.0+influence)/2.0; // Scale to [0, 1] for convenience
 }
 
+std::vector<std::vector<double>> PerlinNoise::generateNoise(glm::vec2 lower_bound, glm::vec2 upper_bound, glm::uvec2 num_pixels)
+{
+	std::vector<std::vector<double>> noise(num_pixels.x, std::vector<double>(num_pixels.y));
+	for (int x = 0; x < num_pixels.x; ++x)
+	{
+		for (int y = 0; y < num_pixels.y; ++y)
+		{
+			auto scaled_x = (float(x) / num_pixels.x)*(upper_bound.x - lower_bound.x) + lower_bound.x;
+			auto scaled_y = (float(y) / num_pixels.y)*(upper_bound.y - lower_bound.y) + lower_bound.y;
+			noise[x][y] = getPointValue({ scaled_x, scaled_y });
+		}
+	}
+	return noise;
+}
+
 float PerlinNoise::ease(float t)
 {
     //auto val = (t*t*t)*(6.f*(t*t*t) - 15.f*t + 10.f);

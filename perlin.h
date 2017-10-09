@@ -25,6 +25,8 @@ public:
     
     double getPointValue(glm::vec2 pos);
 
+	std::vector<std::vector<double>> generateNoise(glm::vec2 lower_bound, glm::vec2 upper_bound, glm::uvec2 num_pixels);
+
 private:
 
     float ease(float t);
