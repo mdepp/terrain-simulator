@@ -14,16 +14,16 @@ int main(int argc, char* argv[])
     PerlinNoise pn(nCells, nCells);
 
     // A quick hack to get noise displaying
-    vector<char> pixels;
+    vector<uint32_t> pixels;
     for(int i=0; i<imageSize; ++i)
     {
         for (int j=0; j<imageSize; ++j)
         {
-            auto x = i/(double)imageSize*nCells;
-            auto y = j/(double)imageSize*nCells;
+			auto x = j / (double)imageSize*nCells;
+			auto y = i / (double)imageSize*nCells;
 			auto val = pn.getPointValue({ x, y });
-			val = std::max(0.0, std::min(1.0, val));
-			pixels.push_back(0x0000FF * val);
+			int colourComponent = 0x0000FF * std::max(0.0, std::min(1.0, val));
+			pixels.push_back(colourComponent + (colourComponent<<8) + (colourComponent<<16));
         }
     }
 
@@ -35,8 +35,8 @@ int main(int argc, char* argv[])
     auto noise_surface = SDL_CreateRGBSurfaceFrom(
         (void*)pixels.data(),
         imageSize, imageSize,
-        24,
-        imageSize,
+        sizeof(uint32_t)*8,
+        imageSize * sizeof(uint32_t),
         0xFF0000,
         0x00FF00,
         0x0000FF,
