@@ -11,7 +11,6 @@ int main(int argc, char* argv[])
 {
     const int imageSize = 800;
     const int nCells = 10;
-    const float increment = imageSize / (float)nCells;
     PerlinNoise pn(nCells, nCells);
 
     // A quick hack to get noise displaying
