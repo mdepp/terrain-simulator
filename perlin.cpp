@@ -9,7 +9,7 @@ PerlinNoise::PerlinNoise(glm::uvec2 num_cells)
   : m_gradientChoices({ glm::vec2(1, 1), glm::vec2(1, -1), glm::vec2(-1, 1), glm::vec2(-1, -1) }),
   m_rnd(m_rdev()), m_dist(0, m_gradientChoices.size()-1)
 {
-	generateNoise(num_cells);
+    generateNoise(num_cells);
 }
 
 double PerlinNoise::getNoiseValue(glm::vec2 pos)
@@ -32,40 +32,40 @@ double PerlinNoise::getNoiseValue(glm::vec2 pos)
 
 std::vector<std::vector<double>> PerlinNoise::getNoiseMap(glm::vec2 lower_bound, glm::vec2 upper_bound, glm::uvec2 num_pixels)
 {
-	std::vector<std::vector<double>> noise(num_pixels.x, std::vector<double>(num_pixels.y));
-	for (int x = 0; x < num_pixels.x; ++x)
-	{
-		for (int y = 0; y < num_pixels.y; ++y)
-		{
-			auto scaled_x = (float(x) / num_pixels.x)*(upper_bound.x - lower_bound.x) + lower_bound.x;
-			auto scaled_y = (float(y) / num_pixels.y)*(upper_bound.y - lower_bound.y) + lower_bound.y;
-			noise[x][y] = getNoiseValue({ scaled_x, scaled_y });
-		}
-	}
-	return noise;
+    std::vector<std::vector<double>> noise(num_pixels.x, std::vector<double>(num_pixels.y));
+    for (int x = 0; x < num_pixels.x; ++x)
+    {
+        for (int y = 0; y < num_pixels.y; ++y)
+        {
+            auto scaled_x = (float(x) / num_pixels.x)*(upper_bound.x - lower_bound.x) + lower_bound.x;
+            auto scaled_y = (float(y) / num_pixels.y)*(upper_bound.y - lower_bound.y) + lower_bound.y;
+            noise[x][y] = getNoiseValue({ scaled_x, scaled_y });
+        }
+    }
+    return noise;
 }
 
 std::random_device::result_type PerlinNoise::generateNoise(glm::uvec2 num_cells)
 {
-	return generateNoise(num_cells, m_rdev());
+    return generateNoise(num_cells, m_rdev());
 }
 std::random_device::result_type PerlinNoise::generateNoise(glm::uvec2 num_cells, std::random_device::result_type seed)
 {
-	m_width = num_cells.x;
-	m_height = num_cells.y;
+    m_width = num_cells.x;
+    m_height = num_cells.y;
 
-	m_rnd.seed(seed);
+    m_rnd.seed(seed);
 
-	m_gradients.resize(m_width);
-	for (auto& rows : m_gradients)
-	{
-		rows.resize(m_height);
-		for (auto& corner : rows)
-		{
-			corner = m_dist(m_rnd);
-		}
-	}
-	return seed;
+    m_gradients.resize(m_width);
+    for (auto& rows : m_gradients)
+    {
+        rows.resize(m_height);
+        for (auto& corner : rows)
+        {
+            corner = m_dist(m_rnd);
+        }
+    }
+    return seed;
 }
 
 float PerlinNoise::ease(float t)

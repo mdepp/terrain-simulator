@@ -23,29 +23,33 @@ class PerlinNoise
 public:
     PerlinNoise(glm::uvec2 num_cells);
     
-	/*
-	 * Calculate the value (in range [0, 1]) for a single point. Will repeat if
-	 * 'pos' is not within [0, width]x[0, height]. T
-	 */
+    /*
+     * Calculate the value (in range [0, 1]) for a single point. Will repeat if
+     * 'pos' is not within [0, width]x[0, height]. T
+     */
     double getNoiseValue(glm::vec2 pos);
-	std::vector<std::vector<double>> getNoiseMap(glm::vec2 lower_bound, glm::vec2 upper_bound, glm::uvec2 num_pixels);
+    /*
+     * Creates and fills a 2-dimensional std::vector with noise values between
+     * the specified bounds.
+     */
+    std::vector<std::vector<double>> getNoiseMap(glm::vec2 lower_bound, glm::vec2 upper_bound, glm::uvec2 num_pixels);
 
-	/*
-	 * Randomly generate new gradient vectors at corners of a specified number of horizontal
-	 * and vertical cells. This will result in new noise values being calculated with
-	 * getNoiseValue() and getNoiseMap(). Can optionally provide a seed to control noise
-	 * generation. If no seed is specified one is generated non-deterministically. Returns 
-	 * this seed, which can be used to replicate specific noise patterns later.
-	 */
-	std::random_device::result_type generateNoise(glm::uvec2 num_cells);
-	std::random_device::result_type generateNoise(glm::uvec2 num_cells, std::random_device::result_type seed);
+    /*
+     * Randomly generate new gradient vectors at corners of a specified number of horizontal
+     * and vertical cells. This will result in new noise values being calculated with
+     * getNoiseValue() and getNoiseMap(). Can optionally provide a seed to control noise
+     * generation. If no seed is specified one is generated non-deterministically. Returns 
+     * this seed, which can be used to replicate specific noise patterns later.
+     */
+    std::random_device::result_type generateNoise(glm::uvec2 num_cells);
+    std::random_device::result_type generateNoise(glm::uvec2 num_cells, std::random_device::result_type seed);
 
 
 private:
 
     float ease(float t);
-	float interpolate(float first, float second, float amount);
-	float getInfluence(glm::ivec2 corner, glm::vec2 pos);
+    float interpolate(float first, float second, float amount);
+    float getInfluence(glm::ivec2 corner, glm::vec2 pos);
     glm::vec2 getGradient(glm::ivec2 corner);
 
     unsigned int m_width, m_height;
@@ -53,7 +57,7 @@ private:
     std::vector<glm::vec2> m_gradientChoices;
     std::vector<std::vector<int>> m_gradients; // Stores an index into gradient choices
 
-	std::random_device m_rdev;
-	std::mt19937 m_rnd;
-	std::uniform_int_distribution<int> m_dist;
+    std::random_device m_rdev;
+    std::mt19937 m_rnd;
+    std::uniform_int_distribution<int> m_dist;
 };
