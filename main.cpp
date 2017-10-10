@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
     SDL_Init(SDL_INIT_VIDEO);
 
     const int imageSize = 800;
-    const int nCells = 10;
+    const int nCells = 5;
     PerlinNoise pn({ nCells, nCells });
 
     // A quick hack to get noise displaying

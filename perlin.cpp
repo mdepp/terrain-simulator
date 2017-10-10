@@ -45,11 +45,11 @@ std::vector<std::vector<double>> PerlinNoise::getNoiseMap(glm::vec2 lower_bound,
     return noise;
 }
 
-std::random_device::result_type PerlinNoise::generateNoise(glm::uvec2 num_cells)
+PerlinNoise::SeedType PerlinNoise::generateNoise(glm::uvec2 num_cells)
 {
     return generateNoise(num_cells, m_rdev());
 }
-std::random_device::result_type PerlinNoise::generateNoise(glm::uvec2 num_cells, std::random_device::result_type seed)
+PerlinNoise::SeedType PerlinNoise::generateNoise(glm::uvec2 num_cells, PerlinNoise::SeedType seed)
 {
     m_width = num_cells.x;
     m_height = num_cells.y;

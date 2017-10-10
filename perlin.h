@@ -22,7 +22,7 @@ class PerlinNoise
 {
 public:
     PerlinNoise(glm::uvec2 num_cells);
-    
+    using SeedType = std::random_device::result_type;
     /*
      * Calculate the value (in range [0, 1]) for a single point. Will repeat if
      * 'pos' is not within [0, width]x[0, height]. T
@@ -41,8 +41,8 @@ public:
      * generation. If no seed is specified one is generated non-deterministically. Returns 
      * this seed, which can be used to replicate specific noise patterns later.
      */
-    std::random_device::result_type generateNoise(glm::uvec2 num_cells);
-    std::random_device::result_type generateNoise(glm::uvec2 num_cells, std::random_device::result_type seed);
+    SeedType generateNoise(glm::uvec2 num_cells);
+    SeedType generateNoise(glm::uvec2 num_cells, SeedType seed);
 
 
 private:
