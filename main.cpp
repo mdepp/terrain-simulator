@@ -1,5 +1,5 @@
 #include <SDL2/SDL.h>
-#include "perlin.h"
+#include "terrain.h"
 #include <algorithm>
 #include <glm/glm.hpp>
 #include <vector>
@@ -16,8 +16,9 @@ int main(int argc, char* argv[])
     const int nCells = 5;
     PerlinNoise pn({ nCells, nCells });
 
-    // A quick hack to get noise displaying
-    auto pixels = pn.getNoiseMap({ 0, 0 }, {nCells, nCells }, { imageSize, imageSize });
+    Terrain terrain({ imageSize, imageSize }, { nCells, nCells });
+    terrain.rain();
+    auto pixels = terrain.getHeightmap();
     auto noise_surface = createSurfaceFromHeightmap(pixels);
 
     auto window = SDL_CreateWindow("Perlin noise",
@@ -34,6 +35,12 @@ int main(int argc, char* argv[])
         {
             if (e.type == SDL_QUIT) running = false;
             if (e.type == SDL_KEYUP && e.key.keysym.sym == SDLK_ESCAPE) running = false;
+            
+        }
+        {
+            terrain.rain();
+            SDL_FreeSurface(noise_surface);
+            noise_surface = createSurfaceFromHeightmap(terrain.getHeightmap());
         }
 
         SDL_BlitSurface(noise_surface, nullptr, screen, nullptr);

@@ -115,9 +115,13 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="perlin.cpp" />
+    <ClCompile Include="terrain.cpp" />
+    <ClCompile Include="utils.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="perlin.h" />
+    <ClInclude Include="terrain.h" />
+    <ClInclude Include="utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
